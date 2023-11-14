@@ -22,9 +22,9 @@ public class OsobaController {
   public OsobaController(OsobaRepository osobaRepository) {
     this.osobaRepository = osobaRepository;
   }
-  private final List<Osoba> seznamOsob = List.of(
-          new Osoba(1L, "Božena", "Němcová", LocalDate.of(1820, 2, 4), "Vídeň", null, null)
-  );
+//  private final List<Osoba> seznamOsob = List.of(
+//          new Osoba(1L, "Božena", "Němcová", LocalDate.of(1820, 2, 4), "Vídeň", null, null)
+//  );
 
 
   @InitBinder
@@ -50,8 +50,8 @@ public class OsobaController {
     if (bindingResult.hasErrors()) {
       return "detail";
     }
+   // lektor přidal jako pojistku          osoba.setId(null);
     osobaRepository.save(osoba);
-
     //TODO uložit údaj o nové osobě - funguje
     return "redirect:/";
   }
@@ -69,17 +69,14 @@ public class OsobaController {
       return "detail";
     }
     osobaRepository.save(osoba);
-    //TODO uložit údaj o osobě - funugje
-
+    //TODO uložit údaj o osobě - funugje, @PathVariable long id se může smazat, je zbytečné
     return "redirect:/";
   }
 
   @PostMapping(value = "/{id:[0-9]+}", params = "akce=smazat")
   public String smazat(@PathVariable long id) {
     osobaRepository.deleteById(id);
-
     //TODO smazat údaj o osobě - funguje
     return "redirect:/";
   }
-
 }
